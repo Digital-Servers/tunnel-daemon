@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yourusername/tunnel-api/utils"
+	"github.com/Digital-Servers/tunnel-daemon/utils"
 )
 
 func CreateTunnel(c *gin.Context) {
