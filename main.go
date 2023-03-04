@@ -40,13 +40,19 @@ func main() {
 	}
 }
 
+// authMiddleware is a middleware function that validates the authorization token
 func authMiddleware(authToken string) gin.HandlerFunc {
+	// Return a function that takes a gin.Context argument
 	return func(c *gin.Context) {
+	   // Extract the value of the Authorization header from the request
 	   authHeader := c.GetHeader("Authorization")
+	   // Check if the Authorization header is valid
 	   if authHeader != fmt.Sprintf("Bearer %s", authToken) {
+		  // Abort the request with an HTTP 401 Unauthorized status and an error message
 		  c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid authorization token"})
 		  return
 	   }
+	   // Call the next handler
 	   c.Next()
 	}
  }
