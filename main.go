@@ -15,7 +15,7 @@ func main() {
 	r := gin.Default()
 
 	// Register the middleware for all routes
-	r.Use(handlers.authMiddleware(authToken))
+	r.Use(authMiddleware(authToken))
 
 	// Map the "/api/tunnel" POST route to the CreateTunnel function in handlers.go
 	r.POST("/api/tunnel", handlers.CreateTunnel)
@@ -37,3 +37,14 @@ func main() {
 		log.Fatal("Unable to start server:", err)
 	}
 }
+
+func authMiddleware(authToken string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+	   authHeader := c.GetHeader("Authorization")
+	   if authHeader != fmt.Sprintf("Bearer %s", authToken) {
+		  c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid authorization token"})
+		  return
+	   }
+	   c.Next()
+	}
+ }

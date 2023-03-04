@@ -18,17 +18,6 @@ type VersionResponse struct {
 
 var startTime = time.Now().UTC()
 
-func authMiddleware(authToken string) gin.HandlerFunc {
-	return func(c *gin.Context) {
-	   authHeader := c.GetHeader("Authorization")
-	   if authHeader != fmt.Sprintf("Bearer %s", authToken) {
-		  c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid authorization token"})
-		  return
-	   }
-	   c.Next()
-	}
- }
-
 // CreateTunnel is the handler function for creating a new tunnel.
 // It extracts the necessary parameters from the request and calls the corresponding utility function to create the tunnel.
 // If there is an error creating the tunnel, it returns an HTTP 500 Internal Server Error response.
