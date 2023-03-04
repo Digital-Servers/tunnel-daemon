@@ -30,9 +30,6 @@ func authMiddleware() gin.HandlerFunc {
 	}
  }
 
-// Register the middleware for all routes
-r.Use(authMiddleware())
-
 // CreateTunnel is the handler function for creating a new tunnel.
 // It extracts the necessary parameters from the request and calls the corresponding utility function to create the tunnel.
 // If there is an error creating the tunnel, it returns an HTTP 500 Internal Server Error response.

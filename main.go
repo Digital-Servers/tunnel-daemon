@@ -14,6 +14,9 @@ func main() {
 	// Create a new default Gin router
 	r := gin.Default()
 
+	// Register the middleware for all routes
+	r.Use(handlers.authMiddleware(authToken))
+
 	// Map the "/api/tunnel" POST route to the CreateTunnel function in handlers.go
 	r.POST("/api/tunnel", handlers.CreateTunnel)
 
