@@ -96,7 +96,7 @@ func GetTunnels(c *gin.Context) {
 
 // GetVersion is the handler function for the version endpoint.
 // It retrieves the version information for the application and returns it as a JSON response.
-func GetVersion(c *gin.Context, appVersion String) {
+func GetVersion(c *gin.Context, appVersion string) {
 	start := time.Now()
 
 	response := VersionResponse{
