@@ -11,14 +11,17 @@ func main() {
 	// Create a new default Gin router
 	r := gin.Default()
 
-	// Map the "/tunnel" POST route to the CreateTunnel function in handlers.go
-	r.POST("/tunnel", handlers.CreateTunnel)
+	// Map the "/api/tunnel" POST route to the CreateTunnel function in handlers.go
+	r.POST("/api/tunnel", handlers.CreateTunnel)
 
-	// Map the "/tunnel/:name" DELETE route to the DeleteTunnel function in handlers.go
-	r.DELETE("/tunnel/:name", handlers.DeleteTunnel)
+	// Map the "/api/tunnel/:name" DELETE route to the DeleteTunnel function in handlers.go
+	r.DELETE("/api/tunnel/:name", handlers.DeleteTunnel)
 
-	// Map the "/tunnels" GET route to the GetTunnels function in handlers.go
-	r.GET("/tunnels", handlers.GetTunnels)
+	// Map the "/api/tunnels" GET route to the GetTunnels function in handlers.go
+	r.GET("/api/tunnels", handlers.GetTunnels)
+
+	// Map the "/api/version" GET route to the GetVersion function in handlers.go
+	r.GET("/api/version", handlers.GetVersion)
 
 	// Start the server on port 8080
 	err := r.Run(":8080")

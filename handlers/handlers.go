@@ -4,10 +4,20 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"encoding/json"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/Digital-Servers/tunnel-daemon/utils"
 )
+
+type VersionResponse struct {
+	Version      string    `json:"version"`
+	Uptime       time.Time `json:"uptime"`
+	ResponseTime int64     `json:"response_time"`
+}
+
+var startTime = time.Now().UTC()
 
 // CreateTunnel is the handler function for creating a new tunnel.
 // It extracts the necessary parameters from the request and calls the corresponding utility function to create the tunnel.
@@ -72,4 +82,18 @@ func GetTunnels(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, tunnels)
+}
+
+// GetVersion is the handler function for the version endpoint.
+// It retrieves the version information for the application and returns it as a JSON response.
+func GetVersion(c *gin.Context) {
+	start := time.Now()
+
+	response := VersionResponse{
+			Version:      "0.0.1",
+			Uptime:       startTime,
+			ResponseTime: time.Since(start).Nanoseconds() / int64(time.Millisecond),
+	}
+
+	c.JSON(http.StatusOK, response)
 }
