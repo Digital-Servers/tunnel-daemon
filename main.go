@@ -2,6 +2,8 @@
 package main
 
 import (
+	"fmt"
+	"net/http"
 	"log"
 	"github.com/gin-gonic/gin"
 	"github.com/Digital-Servers/tunnel-daemon/handlers"
