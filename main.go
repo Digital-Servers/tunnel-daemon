@@ -7,6 +7,9 @@ import (
 	"github.com/Digital-Servers/tunnel-daemon/handlers"
 )
 
+const authToken = "YOUR-BEARER-TOKEN"
+const appVersion = "0.0.1"
+
 func main() {
 	// Create a new default Gin router
 	r := gin.Default()
