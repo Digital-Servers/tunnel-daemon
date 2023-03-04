@@ -27,7 +27,9 @@ func main() {
 	r.GET("/api/tunnels", handlers.GetTunnels)
 
 	// Map the "/api/version" GET route to the GetVersion function in handlers.go
-	r.GET("/api/version", handlers.GetVersion)
+	r.GET("/api/version", func(c *gin.Context) {
+		handlers.GetVersion(c, appVersion)
+	 })
 
 	// Start the server on port 8080
 	err := r.Run(":8080")

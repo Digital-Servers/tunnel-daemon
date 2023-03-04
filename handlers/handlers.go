@@ -4,7 +4,6 @@ package handlers
 import (
 	"fmt"
 	"net/http"
-	"encoding/json"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +18,7 @@ type VersionResponse struct {
 
 var startTime = time.Now().UTC()
 
-func authMiddleware() gin.HandlerFunc {
+func authMiddleware(authToken string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 	   authHeader := c.GetHeader("Authorization")
 	   if authHeader != fmt.Sprintf("Bearer %s", authToken) {
@@ -97,7 +96,7 @@ func GetTunnels(c *gin.Context) {
 
 // GetVersion is the handler function for the version endpoint.
 // It retrieves the version information for the application and returns it as a JSON response.
-func GetVersion(c *gin.Context) {
+func GetVersion(c *gin.Context, appVersion String) {
 	start := time.Now()
 
 	response := VersionResponse{
