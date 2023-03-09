@@ -7,6 +7,7 @@ import (
     "net/http"
     "os/exec"
 	"time"
+	"bytes"
 
 	"github.com/gin-gonic/gin"
 	"github.com/Digital-Servers/tunnel-daemon/utils"
