@@ -16,8 +16,6 @@ const apiUrl = "http://127.0.0.1:8000/api"
 func main() {
     handlers.SetupInternal(apiUrl+"/pops/setup/internal", authToken)
 
-    fmt.Println("Script output:", output)
-
 	// Create a new default Gin router
 	r := gin.Default()
 
