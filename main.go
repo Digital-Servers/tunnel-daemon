@@ -11,8 +11,16 @@ import (
 
 const authToken = "YOUR-BEARER-TOKEN"
 const appVersion = "0.0.1"
+const apiUrl = "http://127.0.0.1:8000/api"
 
 func main() {
+    output, err := handlers.SetupInternal(apiUrl+"/pops/setup/internal", authToken)
+    if err != nil {
+        fmt.Println("Error executing script:", err)
+        return
+    }
+    fmt.Println("Script output:", output)
+
 	// Create a new default Gin router
 	r := gin.Default()
 
@@ -31,7 +39,7 @@ func main() {
 	// Map the "/api/version" GET route to the GetVersion function in handlers.go
 	r.GET("/api/version", func(c *gin.Context) {
 		handlers.GetVersion(c, appVersion)
-	 })
+	})
 
 	// Start the server on port 8080
 	err := r.Run(":8080")
