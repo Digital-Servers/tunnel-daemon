@@ -14,11 +14,8 @@ const appVersion = "0.0.1"
 const apiUrl = "http://127.0.0.1:8000/api"
 
 func main() {
-    output, err := handlers.SetupInternal(apiUrl+"/pops/setup/internal", authToken)
-    if err != nil {
-        fmt.Println("Error executing script:", err)
-        return
-    }
+    handlers.SetupInternal(apiUrl+"/pops/setup/internal", authToken)
+
     fmt.Println("Script output:", output)
 
 	// Create a new default Gin router
